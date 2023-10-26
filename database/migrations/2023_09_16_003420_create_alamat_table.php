@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('alamat', function (Blueprint $table) {
             $table->id();
-            $table->integer('provinsi_id')->nullable();
-            $table->integer('kota_id')->nullable();
-            $table->integer('kecamatan_id')->nullable();
-            $table->integer('kelurahan_id')->nullable();
+            $table->boolean('statusenabled');
+            $table->integer('provinsi')->nullable();
+            $table->string('namaprovinsi')->nullable();
+            $table->integer('kota')->nullable();
+            $table->string('namakota')->nullable();
             $table->string('alamat')->nullable();
+            $table->boolean('utama')->nullable();
             $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

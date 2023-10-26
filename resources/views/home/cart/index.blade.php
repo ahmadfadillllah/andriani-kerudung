@@ -42,9 +42,9 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th colspan="2" class="tp-cart-header-product">Product</th>
-                                        <th class="tp-cart-header-price">Price</th>
-                                        <th class="tp-cart-header-quantity">Quantity</th>
+                                        <th colspan="2" class="tp-cart-header-product">Produk</th>
+                                        <th class="tp-cart-header-price">Harga</th>
+                                        <th class="tp-cart-header-quantity">Jumlah</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -55,12 +55,12 @@
                                     @foreach ($cart as $item)
                                     <tr>
                                         <!-- img -->
-                                        <td class="tp-cart-img"><a href="product-details.html"> <img
+                                        <td class="tp-cart-img"><a href="javascript:void(0);"> <img
                                                     src="{{ asset('image/produk') }}/{{ $item->produk->gambar1 }}"
-                                                    alt=""></a></td>
+                                                    alt="" style="border-radius:10px"></a></td>
                                         <!-- title -->
                                         <td class="tp-cart-title"><a
-                                                href="product-details.html">{{ $item->produk->nama }}</a></td>
+                                                href="javascript:void(0);"> @if ($item->produk->bundle != null) <b>Paket Bundle |</b> @endif {{ $item->produk->nama }}</a></td>
                                         <!-- price -->
                                         <td class="tp-cart-price"><span>@currency($item->produk->harga)</span></td>
                                         <!-- quantity -->
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </form>
-                    <form action="{{ route('coupon.index') }}" method="GET">
+                    <form action="{{ route('home.cart.index') }}" method="GET">
                        <div class="tp-cart-coupon-input-box">
                           <label>Coupon Code:</label>
                           <div class="tp-cart-coupon-input d-flex align-items-center">
@@ -136,6 +136,26 @@
                           </div>
                        </div>
                     </form>
+                    <br>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="card-group">
+                                @if($bundle != null)
+                                @foreach ($bundle as $bu)
+                                <div class="card w-50">
+                                    <div class="card-body">
+                                    <h5 class="card-title">Paket Bundling</h5>
+                                    <p class="card-text" style="text-align: justify">
+                                        <img src="{{ asset('image/produk') }}/{{ $bu->gambar1 }}"  alt="" width="80px" style="float: left;border-radius: 10px;margin:0 8px 4px 0;">{{ $bu->nama }}</p>
+                                    <p class="card-text"><del>@currency($bu->hargaasli)</del> / @currency($bu->harga)</p>
+                                    <a href="{{ route('home.cart.add_bundle', $bu->id) }}" class="btn btn-primary">Pesan</a>
+                                    </div>
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @if ($coupon != null)
                     @php

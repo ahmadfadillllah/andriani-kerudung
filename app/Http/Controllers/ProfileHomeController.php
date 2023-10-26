@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,12 +14,14 @@ class ProfileHomeController extends Controller
     //
     public function index()
     {
-        if(Auth::user()){
-            $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get()->count();
-            $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
-            return view('home.profile.index', compact('cek_cart', 'cart'));
-        }
-        return view('home.profile.index');
+        $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get()->count();
+        $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
+
+        $alamat = Alamat::where('users_id', Auth::user()->id)->where('statusenabled', true)->get();
+        $alamat_utama = $alamat->pluck('utama')->toArray();
+
+        return view('home.profile.index', compact('cek_cart', 'cart', 'alamat', 'alamat_utama'));
+
     }
 
     public function personal(Request $request)
@@ -63,6 +66,67 @@ class ProfileHomeController extends Controller
         ]);
 
         return back()->with("success", "Password telah diubah");
+    }
+
+    public function alamat( Request $request)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/city?id=$request->kota&province=$request->provinsi",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "key: ab64c4ae2a078453de30c534ebc56fe2"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else {
+            $respon = collect(json_decode($response));
+        }
+
+        if($request->utama == "true"){
+            $utama = true;
+        }else{
+            $utama = false;
+        }
+        try {
+            $alamat = new Alamat;
+            $alamat->statusenabled = true;
+            $alamat->provinsi = $request->provinsi;
+            $alamat->namaprovinsi = $respon['rajaongkir']->results->province;
+            $alamat->namakota = $respon['rajaongkir']->results->city_name;
+            $alamat->users_id = Auth::user()->id;
+            $alamat->kota = $request->kota;
+            $alamat->alamat = $request->alamat;
+            $alamat->utama = $utama;
+            $alamat->save();
+
+            return back()->with("success", "Alamat telah ditambahkan");
+        } catch (\Throwable $th){
+            return back()->with("info", $th->getMessage());
+        }
+    }
+
+    public function hapus_alamat($id)
+    {
+        try {
+            Alamat::where('id', $id)->update(['statusenabled' => false]);
+            return redirect()->back()->with('success', 'Alamat berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', $th->getMessage());
+        }
     }
 
 

@@ -182,8 +182,9 @@
                     <script>
                         document.write(new Date().getFullYear())
 
-                    </script> &copy; {{ config('app.name') }} by <a href="https://adhyy.my.id"
-                        target="_blank">mr_adhyy</a>
+                    </script> Copyright &copy; {{ config('app.name') }}
+                    {{-- by <a href="https://adhyy.my.id"
+                        target="_blank">mr_adhyy</a> --}}
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">

@@ -11,17 +11,25 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-
-
         $jenis_produk = JenisProduk::where('statusenabled', true)->get();
-        $produk = Produk::where('statusenabled', true)->where('stok', '>', 0)->with('jenisproduk')->get();
+        if(isset($request->produk)){
+            $produk = Produk::where('statusenabled', true)->where('bundle', null)
+            ->where('stok', '>', 0)->with('jenisproduk')
+            ->orWhere('nama', 'like', '%' . $request->produk . '%')
+            ->get();
+        }else{
+            $produk = Produk::where('statusenabled', true)->where('bundle', null)->where('stok', '>', 0)->with('jenisproduk')->get();
+        }
+
         if(Auth::user()){
             $cek_cart = Cart::where('users_id', Auth::user()->id)->get()->count();
             $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
             return view('home.index', compact('jenis_produk', 'produk', 'cek_cart', 'cart'));
         }
+
         return view('home.index', compact('jenis_produk', 'produk'));
+
     }
 }

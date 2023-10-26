@@ -58,7 +58,7 @@
                             </span>
                         </div>
                         <div class="tp-feature-content">
-                            <h3 class="tp-feature-title">Return & Refunf</h3>
+                            <h3 class="tp-feature-title">Return & Refund</h3>
                             <p>Maney back guarantee</p>
                         </div>
                     </div>
@@ -92,8 +92,8 @@
                             </span>
                         </div>
                         <div class="tp-feature-content">
-                            <h3 class="tp-feature-title">Member Discount</h3>
-                            <p>Onevery order over $140.00</p>
+                            <h3 class="tp-feature-title">Member VIP Discount</h3>
+                            <p>Onevery order over</p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="tp-feature-content">
                             <h3 class="tp-feature-title">Support 24/7</h3>
-                            <p>Contact us 24 hours a day</p>
+                            <p>Contact us 24 hours</p>
                         </div>
                     </div>
                 </div>

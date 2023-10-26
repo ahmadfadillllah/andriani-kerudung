@@ -75,6 +75,12 @@
                         <span> Produk </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('bundle.index') }}">
+                        <i class="mdi mdi-briefcase-outline"></i>
+                        <span> Bundle </span>
+                    </a>
+                </li>
                 <li class="menu-title">Extra</li>
                 <li>
                     <a href="#">

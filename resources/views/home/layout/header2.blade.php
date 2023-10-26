@@ -14,10 +14,10 @@
                     </div>
                     <div class="col-xl-6 col-lg-7 d-none d-lg-block">
                         <div class="tp-header-search pl-70">
-                            <form action="#">
+                            <form action="{{ route('home.index') }}" method="GET">
                                 <div class="tp-header-search-wrapper d-flex align-items-center">
                                     <div class="tp-header-search-box">
-                                        <input type="text" placeholder="Cari Produk...">
+                                        <input type="text" name="produk" placeholder="Cari Produk...">
                                     </div>
                                     <div class="tp-header-search-btn">
                                         <button type="submit">
