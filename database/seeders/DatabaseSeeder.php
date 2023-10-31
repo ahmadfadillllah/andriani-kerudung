@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\JenisProduk::factory(50)->create();
+        // \App\Models\JenisProduk::factory(50)->create();
 
 
         // \App\Models\User::factory()->create([
@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
         ]);
-        \App\Models\Produk::factory(100)->create();
+        // \App\Models\Produk::factory(100)->create();
     }
 }
