@@ -41,25 +41,25 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Gambar 1</label>
-                                <input type="file" id="example-fileinput" name="gambar1" class="form-control" required>
+                                <input type="url" id="simpleinput" name="gambar1" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Gambar 2</label>
-                                <input type="file" id="example-fileinput" name="gambar2" class="form-control">
+                                <input type="url" id="simpleinput" name="gambar2" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Gambar 3</label>
-                                <input type="file" id="example-fileinput" name="gambar3" class="form-control">
+                                <input type="url" id="simpleinput" name="gambar3" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Gambar 4</label>
-                                <input type="file" id="example-fileinput" name="gambar4" class="form-control">
+                                <input type="url" id="simpleinput" name="gambar3" class="form-control" required>
                             </div>
                         </div>
                     </div>

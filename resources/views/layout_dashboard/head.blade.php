@@ -33,6 +33,7 @@
     <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.lordicon.com/lordicon-1.1.0.js"></script>
 
 </head>
 <!-- body start -->

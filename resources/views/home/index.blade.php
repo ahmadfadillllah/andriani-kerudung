@@ -175,7 +175,7 @@
                                         <div class="tp-product-item p-relative transition-3 mb-25">
                                             <div class="tp-product-thumb p-relative fix m-img">
                                                 <a href="javascript:void(0);">
-                                                    <img src="{{ asset('image/produk') }}/{{ $p->gambar1 }}"
+                                                    <img src="{{ $p->gambar1 }}"
                                                         alt="product-electronic">
                                                 </a>
 
@@ -309,24 +309,24 @@
                                 <button class="nav-link active" id="nav-1-tab{{ $pp->id }}" data-bs-toggle="tab"
                                     data-bs-target="#nav-1{{ $pp->id }}" type="button" role="tab" aria-controls="nav-1{{ $pp->id }}"
                                     aria-selected="true">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar1 }}" alt="">
+                                    <img src="{{ $pp->gambar1 }}" alt="">
                                 </button>
                                 @if ( $pp->gambar2 != null)
                                 <button class="nav-link" id="nav-2-tab{{ $pp->id }}" data-bs-toggle="tab" data-bs-target="#nav-2{{ $pp->id }}"
                                     type="button" role="tab" aria-controls="nav-2{{ $pp->id }}" aria-selected="false">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar2 }}" alt="">
+                                    <img src="{{ $pp->gambar2 }}" alt="">
                                 </button>
                                 @endif
                                 @if ( $pp->gambar3 != null)
                                 <button class="nav-link" id="nav-3-tab{{ $pp->id }}" data-bs-toggle="tab" data-bs-target="#nav-3{{ $pp->id }}"
                                     type="button" role="tab" aria-controls="nav-3{{ $pp->id }}" aria-selected="false">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar3 }}" alt="">
+                                    <img src="{{ $pp->gambar3 }}" alt="">
                                 </button>
                                 @endif
                                 @if ( $pp->gambar4 != null)
                                 <button class="nav-link" id="nav-4-tab{{ $pp->id }}" data-bs-toggle="tab" data-bs-target="#nav-4{{ $pp->id }}"
                                     type="button" role="tab" aria-controls="nav-4{{ $pp->id }}" aria-selected="false">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar4 }}" alt="">
+                                    <img src="{{ $pp->gambar4 }}" alt="">
                                 </button>
                                 @endif
                             </div>
@@ -335,14 +335,14 @@
                             <div class="tab-pane fade show active" id="nav-1{{ $pp->id }}" role="tabpanel"
                                 aria-labelledby="nav-1-tab" tabindex="0">
                                 <div class="tp-product-details-nav-main-thumb">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar1 }}" alt="">
+                                    <img src="{{ $pp->gambar1 }}" alt="">
                                 </div>
                             </div>
                             @if ( $pp->gambar2  != null)
                             <div class="tab-pane fade" id="nav-2{{ $pp->id }}" role="tabpanel" aria-labelledby="nav-2-tab{{ $pp->id }}"
                                 tabindex="0">
                                 <div class="tp-product-details-nav-main-thumb">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar2 }}" alt="">
+                                    <img src="{{ $pp->gambar2 }}" alt="">
                                 </div>
                             </div>
                             @endif
@@ -350,7 +350,7 @@
                             <div class="tab-pane fade" id="nav-3{{ $pp->id }}" role="tabpanel" aria-labelledby="nav-3-tab{{ $pp->id }}"
                                 tabindex="0">
                                 <div class="tp-product-details-nav-main-thumb">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar3 }}" alt="">
+                                    <img src="{{ $pp->gambar3 }}" alt="">
                                 </div>
                             </div>
                             @endif
@@ -359,7 +359,7 @@
                             <div class="tab-pane fade" id="nav-4{{ $pp->id }}" role="tabpanel" aria-labelledby="nav-4-tab{{ $pp->id }}"
                                 tabindex="0">
                                 <div class="tp-product-details-nav-main-thumb">
-                                    <img src="{{ asset('image/produk') }}/{{ $pp->gambar4 }}" alt="">
+                                    <img src="{{ $pp->gambar4 }}" alt="">
                                 </div>
                             </div>
                             @endif

@@ -25,22 +25,22 @@
                                         <div class="carousel-inner">
                                             @if ($item->gambar1 != null)
                                                 <div class="carousel-item active">
-                                                    <img class="d-block img-fluid" src="{{ asset('image/produk') }}/{{ $item->gambar1 }}">
+                                                    <img class="d-block img-fluid" src="{{ $item->gambar1 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar2 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ asset('image/produk') }}/{{ $item->gambar2 }}">
+                                                    <img class="d-block img-fluid" src="{{ $item->gambar2 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar3 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ asset('image/produk') }}/{{ $item->gambar3 }}">
+                                                    <img class="d-block img-fluid" src="{{ $item->gambar3 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar4 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ asset('image/produk') }}/{{ $item->gambar4 }}">
+                                                    <img class="d-block img-fluid" src="{{ $item->gambar4 }}">
                                                 </div>
                                             @endif
 
@@ -69,25 +69,7 @@
     </div> <!-- content -->
 
     <!-- Footer Start -->
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <script>document.write(new Date().getFullYear())</script> &copy; Adminto theme by <a href="#">Coderthemes</a>
-                </div>
-                <div class="col-md-6">
-                    <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">About Us</a>
-                        <a href="javascript:void(0);">Help</a>
-                        <a href="javascript:void(0);">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- end Footer -->
-
-</div>
+    
 
 @include('layout_dashboard.rightbar')
 @include('layout_dashboard.footer')

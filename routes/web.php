@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileHomeController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,6 +79,12 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
     Route::post('/bundle/insert', [BundleController::class, 'insert'])->name('bundle.insert');
     Route::post('/bundle/update/{id}', [BundleController::class, 'update'])->name('bundle.update');
     Route::get('/bundle/destroy/{id}', [BundleController::class, 'destroy'])->name('bundle.destroy');
+
+    //Users
+    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/users/insert', [UsersController::class, 'insert'])->name('users.insert');
+    Route::post('/users/update/{id}', [UsersController::class, 'update'])->name('users.update');
+    Route::get('/users/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');

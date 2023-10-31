@@ -56,7 +56,7 @@
                                     <tr>
                                         <!-- img -->
                                         <td class="tp-cart-img"><a href="javascript:void(0);"> <img
-                                                    src="{{ asset('image/produk') }}/{{ $item->produk->gambar1 }}"
+                                                    src="{{ $item->produk->gambar1 }}"
                                                     alt="" style="border-radius:10px"></a></td>
                                         <!-- title -->
                                         <td class="tp-cart-title"><a
@@ -137,20 +137,62 @@
                        </div>
                     </form>
                     <br>
+                    <div class="tp-cart-coupon-input-box">
+                        <label>Alamat Utama</label>
+                        @if ($alamat != null)
+                        <div class="tp-cart-coupon-input d-flex align-items-center">
+                            <p>Provinsi : {{ $alamat->namaprovinsi }}, Kota/Kab : {{ $alamat->namakota }}, Alamat Lengkap : {{ $alamat->alamat }}</p>
+                         </div>
+                        @else
+                        <div class="tp-cart-coupon-input d-flex align-items-center">
+                            <p style="color: red">Alamat utama tidak ditemukan, tidak bisa memilih kurir</p>
+                         </div>
+                        @endif
+                     </div>
+
+                     <div class="tp-cart-coupon-input-box">
+                        <label for="kurir">Pilih Kurir</label>
+
+                        <select name="kurir" id="kurir">
+                            <option>Pilih kurir terlebih dahulu</option>
+                            @if ($alamat != null)
+                                @foreach ($kurir as $kr)
+                                    <optgroup label="{{ $kr->description }}">
+                                        @foreach ($kr->cost as $cost)
+                                            <option value="{{ $cost->value }}">@currency($cost->value), Estimasi {{ $cost->etd }} hari</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            @endif
+                        </select>
+                     </div>
+
+
                     <div class="container-fluid">
                         <div class="row">
                             <div class="card-group">
                                 @if($bundle != null)
                                 @foreach ($bundle as $bu)
-                                <div class="card w-50">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Paket Bundling</h5>
-                                    <p class="card-text" style="text-align: justify">
-                                        <img src="{{ asset('image/produk') }}/{{ $bu->gambar1 }}"  alt="" width="80px" style="float: left;border-radius: 10px;margin:0 8px 4px 0;">{{ $bu->nama }}</p>
-                                    <p class="card-text"><del>@currency($bu->hargaasli)</del> / @currency($bu->harga)</p>
-                                    <a href="{{ route('home.cart.add_bundle', $bu->id) }}" class="btn btn-primary">Pesan</a>
+                                <div class="col-md-6">
+                                    <div class="card p-3 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="icon"> <i class="bx bxl-mailchimp"></i> </div>
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0">{{ $bu->nama }}</h6></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-5">
+                                            <img src="{{ $bu->gambar1 }}" style="width: 100px">
+                                            <div class="mt-5">
+                                                <div class="mt-3"> <span class="text1"><del>@currency($bu->hargaasli)</del> / @currency($bu->harga)</div>
+                                            </div>
+                                        </div>
+                                        <a href="{{ route('home.cart.add_bundle', $bu->id) }}" class="btn btn-primary">Pesan</a>
                                     </div>
                                 </div>
+
                                 @endforeach
                                 @endif
                             </div>
@@ -174,7 +216,11 @@
                         </div>
                         <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
                             <span class="tp-cart-checkout-top-title">Diskon</span>
-                            <span class="tp-cart-checkout-top-price">@currency($diskon)</span>
+                            <span class="tp-cart-checkout-top-price" id="diskonn">@currency($diskon)</span>
+                        </div>
+                        <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
+                            <span class="tp-cart-checkout-top-title">Ongkir</span>
+                            <span class="tp-cart-checkout-top-price" id="ongkoskirim"></span>
                         </div>
                         {{-- <div class="tp-cart-checkout-shipping">
                             <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
@@ -196,9 +242,9 @@
                         </div> --}}
                         <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
                             <span>Total</span>
-                            <span>@currency($subtotal - $diskon)</span>
+                            <span id="totalseluruh">@currency($subtotal - $diskon)</span>
                         </div>
-                        <div class="tp-cart-checkout-proceed">
+                        <div class="tp-cart-checkout-proceed" id="button-checkout">
                             <button id="pay-button" class="tp-cart-checkout-btn w-100">Checkout</button>
                         </div>
                     </div>
@@ -215,65 +261,106 @@
 
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
-      // Trigger snap popup. @TODO: Replace TRANSACTIO  N_TOKEN_HERE with your transaction token
-      window.snap.pay('{{ $token }}', {
-        onSuccess: function(result){
-          /* You may add your own implementation here */
-        //   alert("payment success!"); console.log(result);
-            let dataId = @json($cart);
-            console.log(dataId);
-            var status = "Sudah Dipesan"
-            var data = { status: status,idcart :dataId };
-            console.log(data);
-            var dataType = "json";
-            var headers = { "X-CSRF-TOKEN": $('input[name="_token"]').val()};
-            $.ajax({
-                type: "POST",
-                url: "{{ route('home.cart.checkout') }}",
-                data: data,
-                headers: headers,
-                success: function(data, status) {
-                    var data = data;
-                    Swal.fire(
-                    'Sukses',
-                    'Pembayaran berhasil,Silahkan Cek status Pesanan Anda anda',
-                    'success'
+        var x = document.getElementById("button-checkout");
+        const selectedPackage = $('#kurir').val();
+        if(selectedPackage == "Pilih kurir terlebih dahulu"){
+            Swal.fire(
+                    'Upps!',
+                    'Harap pilih kurir terlebih dahulu',
+                    'info'
                     )
-                console.log(data);
-                window.location = "/customer/homepage";
-                },
-                dataType: dataType
-            });
+        }else{
+            window.snap.pay('{{ $token }}', {
+                onSuccess: function(result){
+                /* You may add your own implementation here */
+                //   alert("payment success!"); console.log(result);
+                    let dataId = @json($cart);
+                    console.log(dataId);
+                    var status = "Sudah Dipesan"
+                    var data = { status: status,idcart :dataId };
+                    console.log(data);
+                    var dataType = "json";
+                    var headers = { "X-CSRF-TOKEN": $('input[name="_token"]').val()};
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('home.cart.checkout') }}",
+                        data: data,
+                        headers: headers,
+                        success: function(data, status) {
+                            var data = data;
+                            Swal.fire(
+                            'Sukses',
+                            'Pembayaran berhasil,Silahkan Cek status Pesanan Anda anda',
+                            'success'
+                            )
+                        console.log(data);
+                        window.location = "/customer/homepage";
+                        },
+                        dataType: dataType
+                    });
 
-        },
-        onPending: function(result){
-          /* You may add your own implementation here */
-        //   alert("wating your payment!"); console.log(result);
-        Swal.fire(
-                'Upps!',
-                'Pembayaran dipending',
-                'info'
-                )
-        },
-        onError: function(result){
-          /* You may add your own implementation here */
-        //   alert("payment failed!"); console.log(result);
-          Swal.fire(
-                'Gagal',
-                'Pembayaran gagal',
-                'warning'
-                )
-        },
-        onClose: function(){
-          /* You may add your own implementation here */
-        //   alert('you closed the popup without finishing the payment');
-        Swal.fire(
-                'Upps!',
-                'Pembayaran ditunda',
-                'warning'
-                )
+                },
+                onPending: function(result){
+                /* You may add your own implementation here */
+                //   alert("wating your payment!"); console.log(result);
+                Swal.fire(
+                        'Upps!',
+                        'Pembayaran dipending',
+                        'info'
+                        )
+                },
+                onError: function(result){
+                /* You may add your own implementation here */
+                //   alert("payment failed!"); console.log(result);
+                Swal.fire(
+                        'Gagal',
+                        'Pembayaran gagal',
+                        'warning'
+                        )
+                },
+                onClose: function(){
+                /* You may add your own implementation here */
+                //   alert('you closed the popup without finishing the payment');
+                Swal.fire(
+                        'Upps!',
+                        'Pembayaran ditunda',
+                        'warning'
+                        )
+                }
+            })
         }
-      })
     });
 </script>
+
+<script>
+
+
+    $('#kurir').on('change', function(){
+    const selectedPackage = $('#kurir').val();
+    $('#selected').text(selectedPackage);
+    var ongkoskirim = document.getElementById("ongkoskirim");
+    var tkeseluruhan = document.getElementById("totalseluruh");
+
+    var total = document.getElementById("totalseluruh").innerHTML;
+    var total = parseFloat(total.replace(",",""));
+    var totalseluruh = parseFloat(total) + parseFloat(selectedPackage);
+
+    ongkoskirim.innerHTML = new Intl.NumberFormat().format(selectedPackage);
+    tkeseluruhan.innerHTML = new Intl.NumberFormat().format(totalseluruh);
+});
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#diskonn').keyup(function(){
+        var bayar=parseInt($('#bayar').val());
+        var diskon=parseInt($('#diskonn').val());
+        console.log(diskon);
+
+        var total_bayar=bayar-(diskon/100)*bayar;
+        console.log(total_bayar);
+        $('#Tbayar').val(total_bayar);
+        });
+    });
+    </script>
 @include('home.layout.footer')

@@ -101,7 +101,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('users.index') }}">
                         <i class="mdi mdi-account-multiple-plus-outline"></i>
                         <span> Users </span>
                     </a>

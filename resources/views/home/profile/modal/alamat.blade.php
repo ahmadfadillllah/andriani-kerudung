@@ -30,6 +30,7 @@
                     <div class="mb-3">
                         <label for="example-textarea" class="form-label">Alamat</label>
                         <textarea class="form-control" id="example-textarea" rows="5" name="alamat" required></textarea>
+                        <p style="color:orange">mohon mengisi alamat lengkap agar kurir tidak kebingungan</p>
                     </div>
                     @if (!in_array(true, $alamat_utama))
                         <div class="mb-3">

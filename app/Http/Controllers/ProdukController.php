@@ -31,25 +31,29 @@ class ProdukController extends Controller
             $produk->statusenabled = true;
             $produk->nama = $request->nama;
             $produk->stok = $request->stok;
+            $produk->gambar1 = $request->gambar1;
+            $produk->gambar2 = $request->gambar2;
+            $produk->gambar3 = $request->gambar3;
+            $produk->gambar4 = $request->gambar4;
             $produk->harga = $harga;
 
 
-            if($request->hasFile('gambar1')){
-                $request->file('gambar1')->move('image/produk/', $date.$request->file('gambar1')->getClientOriginalName());
-                $produk->gambar1 = $date.$request->file('gambar1')->getClientOriginalName();
-            }
-            if($request->hasFile('gambar2')){
-                $request->file('gambar2')->move('image/produk/', $date.$request->file('gambar2')->getClientOriginalName());
-                $produk->gambar2 = $date.$request->file('gambar2')->getClientOriginalName();
-            }
-            if($request->hasFile('gambar3')){
-                $request->file('gambar3')->move('image/produk/', $date.$request->file('gambar3')->getClientOriginalName());
-                $produk->gambar3 = $date.$request->file('gambar3')->getClientOriginalName();
-            }
-            if($request->hasFile('gambar4')){
-                $request->file('gambar4')->move('image/produk/', $date.$request->file('gambar4')->getClientOriginalName());
-                $produk->gambar4 = $date.$request->file('gambar4')->getClientOriginalName();
-            }
+            // if($request->hasFile('gambar1')){
+            //     $request->file('gambar1')->move('image/produk/', $date.$request->file('gambar1')->getClientOriginalName());
+            //     $produk->gambar1 = $date.$request->file('gambar1')->getClientOriginalName();
+            // }
+            // if($request->hasFile('gambar2')){
+            //     $request->file('gambar2')->move('image/produk/', $date.$request->file('gambar2')->getClientOriginalName());
+            //     $produk->gambar2 = $date.$request->file('gambar2')->getClientOriginalName();
+            // }
+            // if($request->hasFile('gambar3')){
+            //     $request->file('gambar3')->move('image/produk/', $date.$request->file('gambar3')->getClientOriginalName());
+            //     $produk->gambar3 = $date.$request->file('gambar3')->getClientOriginalName();
+            // }
+            // if($request->hasFile('gambar4')){
+            //     $request->file('gambar4')->move('image/produk/', $date.$request->file('gambar4')->getClientOriginalName());
+            //     $produk->gambar4 = $date.$request->file('gambar4')->getClientOriginalName();
+            // }
             $produk->save();
 
             return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan');

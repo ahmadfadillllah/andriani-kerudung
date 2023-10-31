@@ -13,7 +13,7 @@
         <div class="offcanvas__content">
             <div class="offcanvas__top mb-70 d-flex justify-content-between align-items-center">
                 <div class="offcanvas__logo logo">
-                    <a href="index.html">
+                    <a href="{{ route('home.index') }}">
                         <img src="{{ asset('shofy/html.weblearnbd.net/shofy-prv/shofy') }}/assets/img/logo/logo.png" alt="logo">
                     </a>
                 </div>

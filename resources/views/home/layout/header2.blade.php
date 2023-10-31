@@ -6,7 +6,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-6">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="{{ route('home.index') }}">
                                 <img src="{{ asset('shofy/html.weblearnbd.net/shofy-prv/shofy') }}/assets/img/logo/logo.png"
                                     alt="logo">
                             </a>
