@@ -24,8 +24,8 @@ class HomeController extends Controller
         }
 
         if(Auth::user()){
-            $cek_cart = Cart::where('users_id', Auth::user()->id)->get()->count();
-            $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
+            $cek_cart = Cart::where('users_id', Auth::user()->id)->get()->where('statusenabled', true)->where('statuscheckout', null)->count();
+            $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statusenabled', true)->where('statuscheckout', null)->get();
             return view('home.index', compact('jenis_produk', 'produk', 'cek_cart', 'cart'));
         }
 

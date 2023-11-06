@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BundleController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DependantDropdownController;
 use App\Http\Controllers\DiskonController;
@@ -56,6 +57,10 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
     Route::get('/home/cart/{id_cart}', [CartController::class, 'delete'])->name('home.cart.delete');
     Route::post('/home/cart', [CartController::class, 'update_cart'])->name('home.cart.update_cart');
     Route::post('/home/cart/checkout', [CartController::class, 'checkout'])->name('home.cart.checkout');
+
+    //Checkout
+    Route::get('/home/checkout', [CheckoutController::class, 'index'])->name('home.checkout.index');
+    Route::post('/home/checkout/proses', [CheckoutController::class, 'proses'])->name('home.checkout.proses');
 
     Route::get('/coupon', [DiskonController::class, 'index'])->name('coupon.index');
 

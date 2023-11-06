@@ -15,29 +15,31 @@ class CartController extends Controller
     //
     public function index(Request $request)
     {
-        if(!empty($request->all())){
-            return $request->all();
-        }
         if($request->kode != null){
             $coupon = Diskon::where('kode', $request->kode)->first();
             if($coupon == null){
                 return redirect()->back()->with('info', 'Coupon tidak ditemukan');
             }else{
-                $total = Cart::join('produk', 'cart.produk_id','produk.id')
-                ->select(DB::raw('produk.harga * cart.jumlah as total_harga'))->get();
+                $total = DB::table('cart')->join('produk', 'cart.produk_id','produk.id')
+                ->select(DB::raw('produk.harga * cart.jumlah as total_harga'))
+                ->where('cart.statusenabled', true)->where('cart.statuscheckout', null)->get();
                 $diskon = $total->sum('total_harga') * $coupon->diskon;
                 $grandtotal = (int)$total->sum('total_harga') - (int)$diskon;
             }
         }else{
             $coupon = Diskon::where('kode', $request->kode)->first();
-            $total = Cart::join('produk', 'cart.produk_id','produk.id')
-                ->select(DB::raw('produk.harga * cart.jumlah as total_harga'))->get();
+            $total = DB::table('cart')->join('produk', 'cart.produk_id','produk.id')
+                ->select(DB::raw('produk.harga * cart.jumlah as total_harga'))
+                ->where('cart.statusenabled', true)->where('cart.statuscheckout', null)->get();
                 $diskon = $total->sum('total_harga') * 0;
                 $grandtotal = (int)$total->sum('total_harga') - (int)$diskon;
         }
 
-        $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
-        $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get()->count();
+        $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statusenabled', true)->where('statuscheckout', null)->get();
+        if($cart->isEmpty()){
+            return redirect()->route('home.index')->with('info', 'Keranjang kosong!!');
+        }
+        $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         foreach ($cart as $key => $value) {
             $arr_cart[] = $value->produk_id;
         }
@@ -50,32 +52,9 @@ class CartController extends Controller
             $alamatutama = $alamat->kota;
         }
 
-        if(empty($cart)){
-            return redirect()->route('home.index')->with('info', 'Keranjang kosong!!');
-        }
 
-        \Midtrans\Config::$serverKey = env('serverKey');
-        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = true;
-        // Set sanitization on (default)
-        \Midtrans\Config::$isSanitized = true;
-        // Set 3DS transaction for credit card to true
-        \Midtrans\Config::$is3ds = true;
-
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => $grandtotal,
-            ),
-            'customer_details' => array(
-                'first_name' => Auth::user()->name,
-                'email' => Auth::user()->email,
-                'phone' => Auth::user()->nohp,
-            ),
-        );
 
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
         CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
         CURLOPT_RETURNTRANSFER => true,
@@ -102,9 +81,7 @@ class CartController extends Controller
             $respon = collect(json_decode($response));
         }
         $kurir = $respon['rajaongkir']->results[0]->costs;
-
-        $token = \Midtrans\Snap::getSnapToken($params);
-        return view('home.cart.index', compact('cek_cart', 'cart', 'coupon', 'token', 'bundle', 'alamat', 'kurir'));
+        return view('home.cart.index', compact('cek_cart', 'cart', 'coupon', 'bundle', 'alamat', 'kurir'));
     }
 
     public function add($id, Request $request)
@@ -112,7 +89,7 @@ class CartController extends Controller
         if(!Auth::user()){
             return redirect()->back()->with('info', 'Silahkan login terlebih dahulu');
         }
-        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->get()->count();
+        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         if($cek_cart > 0){
             return redirect()->route('home.index')->with('info', 'Mohon periksa keranjang anda, barang sudah ada sebelumnya');
         }
@@ -135,7 +112,7 @@ class CartController extends Controller
         if(!Auth::user()){
             return redirect()->back()->with('info', 'Silahkan login terlebih dahulu');
         }
-        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->get()->count();
+        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         if($cek_cart > 0){
             return redirect()->route('home.cart.index')->with('info', 'Mohon periksa keranjang anda, barang sudah ada sebelumnya');
         }
@@ -158,7 +135,7 @@ class CartController extends Controller
         if(!Auth::user()){
             return redirect()->back()->with('info', 'Silahkan login terlebih dahulu');
         }
-        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->get()->count();
+        $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         if($cek_cart > 0){
             return redirect()->route('home.index')->with('info', 'Mohon periksa keranjang anda, barang sudah ada sebelumnya');
         }

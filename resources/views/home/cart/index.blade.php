@@ -11,8 +11,6 @@
 @include('home.layout.header3')
 
 <main>
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key={{ config('clientKey') }}></script>
-
     <!-- breadcrumb area start -->
     <section class="breadcrumb__area include-bg pt-95 pb-50">
         <div class="container">
@@ -149,11 +147,10 @@
                          </div>
                         @endif
                      </div>
-
                      <div class="tp-cart-coupon-input-box">
                         <label for="kurir">Pilih Kurir</label>
 
-                        <select name="kurir" id="kurir">
+                        <select name="kurir" id="kurir" onchange="test(this);">
                             <option>Pilih kurir terlebih dahulu</option>
                             @if ($alamat != null)
                                 @foreach ($kurir as $kr)
@@ -212,7 +209,7 @@
                     <div class="tp-cart-checkout-wrapper">
                         <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
                             <span class="tp-cart-checkout-top-title">Subtotal</span>
-                            <span class="tp-cart-checkout-top-price">@currency($subtotal)</span>
+                            <span class="tp-cart-checkout-top-price" id="subtotal">@currency($subtotal)</span>
                         </div>
                         <div class="tp-cart-checkout-top d-flex align-items-center justify-content-between">
                             <span class="tp-cart-checkout-top-title">Diskon</span>
@@ -222,30 +219,12 @@
                             <span class="tp-cart-checkout-top-title">Ongkir</span>
                             <span class="tp-cart-checkout-top-price" id="ongkoskirim"></span>
                         </div>
-                        {{-- <div class="tp-cart-checkout-shipping">
-                            <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
-
-                            <div class="tp-cart-checkout-shipping-option-wrapper">
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="flat_rate" type="radio" name="shipping">
-                                    <label for="flat_rate">Flat rate: <span>$20.00</span></label>
-                                </div>
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="local_pickup" type="radio" name="shipping">
-                                    <label for="local_pickup">Local pickup: <span> $25.00</span></label>
-                                </div>
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="free_shipping" type="radio" name="shipping">
-                                    <label for="free_shipping">Free shipping</label>
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
                             <span>Total</span>
                             <span id="totalseluruh">@currency($subtotal - $diskon)</span>
                         </div>
                         <div class="tp-cart-checkout-proceed" id="button-checkout">
-                            <button id="pay-button" class="tp-cart-checkout-btn w-100">Checkout</button>
+                            <button class="tp-cart-checkout-btn w-100" id="checkout-button">Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -256,85 +235,51 @@
 
 </main>
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<input type="hidden" name="idlogin" value="{{ Auth::user()->id }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">
-
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function () {
+<script>
+    var namakurir = "";
+    function test(selectBox) {
+        var op = selectBox.options[selectBox.selectedIndex];
+        var optgroup = op.parentNode;
+        namakurir = optgroup.label;
+        }
+    var checkoutButton = document.getElementById('checkout-button');
+    checkoutButton.addEventListener('click', function () {
         var x = document.getElementById("button-checkout");
-        const selectedPackage = $('#kurir').val();
-        if(selectedPackage == "Pilih kurir terlebih dahulu"){
+        var kurir = $('#kurir').val();
+
+        var subtotal = document.getElementById("subtotal").innerHTML;
+        subtotal = parseFloat(subtotal.replace(",",""));
+
+        var diskon = document.getElementById("diskonn").innerHTML;
+        diskon = parseFloat(diskon.replace(",",""));
+
+        var ongkoskirim = document.getElementById("ongkoskirim").innerHTML;
+        ongkoskirim = parseFloat(ongkoskirim.replace(",",""));
+
+        var total = document.getElementById("totalseluruh").innerHTML;
+        total = parseFloat(total.replace(",",""));
+
+        if(kurir == "Pilih kurir terlebih dahulu"){
             Swal.fire(
                     'Upps!',
-                    'Harap pilih kurir terlebih dahulu',
+                    'Harap memilih kurir terlebih dahulu',
                     'info'
                     )
         }else{
-            window.snap.pay('{{ $token }}', {
-                onSuccess: function(result){
-                /* You may add your own implementation here */
-                //   alert("payment success!"); console.log(result);
-                    let dataId = @json($cart);
-                    console.log(dataId);
-                    var status = "Sudah Dipesan"
-                    var data = { status: status,idcart :dataId };
-                    console.log(data);
-                    var dataType = "json";
-                    var headers = { "X-CSRF-TOKEN": $('input[name="_token"]').val()};
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('home.cart.checkout') }}",
-                        data: data,
-                        headers: headers,
-                        success: function(data, status) {
-                            var data = data;
-                            Swal.fire(
-                            'Sukses',
-                            'Pembayaran berhasil,Silahkan Cek status Pesanan Anda anda',
-                            'success'
-                            )
-                        console.log(data);
-                        window.location = "/customer/homepage";
-                        },
-                        dataType: dataType
-                    });
-
-                },
-                onPending: function(result){
-                /* You may add your own implementation here */
-                //   alert("wating your payment!"); console.log(result);
-                Swal.fire(
-                        'Upps!',
-                        'Pembayaran dipending',
-                        'info'
-                        )
-                },
-                onError: function(result){
-                /* You may add your own implementation here */
-                //   alert("payment failed!"); console.log(result);
-                Swal.fire(
-                        'Gagal',
-                        'Pembayaran gagal',
-                        'warning'
-                        )
-                },
-                onClose: function(){
-                /* You may add your own implementation here */
-                //   alert('you closed the popup without finishing the payment');
-                Swal.fire(
-                        'Upps!',
-                        'Pembayaran ditunda',
-                        'warning'
-                        )
-                }
-            })
+            location.replace("{{ route('home.checkout.index') }}?diskon="+diskon
+            +"&kurir=" + kurir
+            +"&ongkoskirim=" + ongkoskirim
+            +"&total=" + total
+            +"&subtotal=" + subtotal
+            +"&namakurir=" + namakurir
+            );
         }
     });
 </script>
 
 <script>
-
-
     $('#kurir').on('change', function(){
     const selectedPackage = $('#kurir').val();
     $('#selected').text(selectedPackage);
@@ -349,18 +294,4 @@
     tkeseluruhan.innerHTML = new Intl.NumberFormat().format(totalseluruh);
 });
 </script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#diskonn').keyup(function(){
-        var bayar=parseInt($('#bayar').val());
-        var diskon=parseInt($('#diskonn').val());
-        console.log(diskon);
-
-        var total_bayar=bayar-(diskon/100)*bayar;
-        console.log(total_bayar);
-        $('#Tbayar').val(total_bayar);
-        });
-    });
-    </script>
 @include('home.layout.footer')
