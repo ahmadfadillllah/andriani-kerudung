@@ -83,19 +83,19 @@
                 </li>
                 <li class="menu-title">Extra</li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('keranjang.index') }}">
                         <i class="mdi mdi-briefcase-variant-outline"></i>
                         <span> Keranjang </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('tracking.index') }}">
                         <i class="mdi mdi-chart-donut-variant"></i>
                         <span> Tracking Penjualan </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('rekapan.index') }}">
                         <i class="mdi mdi-texture"></i>
                         <span> Rekapan Penjualan </span>
                     </a>
@@ -107,13 +107,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('validasi.index') }}">
                         <i class="mdi mdi-file-multiple-outline"></i>
                         <span> Validasi Pembayaran </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('konfirmasi.index') }}">
                         <i class="mdi mdi-dock-window"></i>
                         <span> Konfirmasi Pesanan </span>
                     </a>

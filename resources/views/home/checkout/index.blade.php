@@ -234,6 +234,7 @@
                         namakurir: @json($request->namakurir),
                         total: @json($request->total),
                         subtotal: @json($request->subtotal),
+                        statuspembayaran: "Lunas",
                     };
                     var dataType = "json";
                     var headers = { "X-CSRF-TOKEN": $('input[name="_token"]').val()};

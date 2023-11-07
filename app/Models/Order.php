@@ -15,4 +15,8 @@ class Order extends Model
     {
         return $this->belongsTo(Produk::class, 'produk_id');
     }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 }

@@ -9,9 +9,14 @@ use App\Http\Controllers\DependantDropdownController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisProdukController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\KonfirmasiController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileHomeController;
+use App\Http\Controllers\RekapanController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ValidasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +35,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
+Route::post('/contact/post', [HomeController::class, 'contactpost'])->name('home.contact.post');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login/post', [AuthController::class, 'login_post'])->name('login.post');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -73,6 +80,23 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
     Route::post('/jenis_produk/update/{id}', [JenisProdukController::class, 'update'])->name('jenis_produk.update');
     Route::get('/jenis_produk/destroy/{id}', [JenisProdukController::class, 'destroy'])->name('jenis_produk.destroy');
 
+    //Keranjang
+    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+
+    //Tracking Penjualan
+    Route::get('/tracking-penjualan', [TrackingController::class, 'index'])->name('tracking.index');
+
+    //Validasi Pembayaran
+    Route::get('/validasi-pembayaran', [ValidasiController::class, 'index'])->name('validasi.index');
+    Route::get('/validasi-pembayaran/detail/{order_id}', [ValidasiController::class, 'detail'])->name('validasi.detail');
+
+    //Konfirmasi Pesanan
+    Route::get('/konfirmasi-pesanan', [KonfirmasiController::class, 'index'])->name('konfirmasi.index');
+    Route::get('/konfirmasi-pesanan/diterima/{order_id}', [KonfirmasiController::class, 'diterima'])->name('konfirmasi.diterima');
+
+    //Rekapan
+    Route::get('/rekapan', [RekapanController::class, 'index'])->name('rekapan.index');
+
     //Produk
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
     Route::post('/produk/insert', [ProdukController::class, 'insert'])->name('produk.insert');
@@ -91,5 +115,3 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
     Route::post('/users/update/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::get('/users/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 });
-
-Route::get('/', [HomeController::class, 'index'])->name('home.index');

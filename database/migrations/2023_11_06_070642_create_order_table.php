@@ -25,6 +25,8 @@ return new class extends Migration
             $table->bigInteger('ongkoskirim')->nullable();
             $table->string('namakurir')->nullable();
             $table->bigInteger('total')->nullable();
+            $table->string('statuspembayaran')->nullable();
+            $table->string('statuspengiriman')->nullable();
             $table->timestamps();
         });
     }

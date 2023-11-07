@@ -64,6 +64,7 @@ class CheckoutController extends Controller
                 $cart->ongkoskirim = $request->ongkoskirim;
                 $cart->namakurir = $request->namakurir;
                 $cart->total = $grandtotal;
+                $cart->statuspembayaran = $request->statuspembayaran;
                 $cart->save();
             }
 

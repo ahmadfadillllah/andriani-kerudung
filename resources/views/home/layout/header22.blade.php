@@ -27,7 +27,10 @@
         <nav class="tp-main-menu-content">
             <ul>
                 <li><a href="{{ route('home.index') }}">Beranda</a></li>
-                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="{{ route('home.contact') }}">Kontak</a></li>
+                @if (Auth::user())
+                <li><a href="{{ route('dashboard.index') }}">Masuk ke Dashboard</a></li>
+                @endif
             </ul>
         </nav>
     </div>
