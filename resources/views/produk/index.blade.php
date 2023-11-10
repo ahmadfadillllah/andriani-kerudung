@@ -4,16 +4,18 @@
 
 <div class="content-page">
     <div class="content">
-        @include('produk.modal.insert')
-        <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#insertProduk" style="float: right">
-            <span class="btn-label"><i class="mdi mdi-alert-circle-outline" ></i></span>Tambah
-        </button>
+
         <!-- Start Content-->
         <div class="container-fluid">
 
             <div class="row">
+                <div class="col-sm-4">
+                    @include('produk.modal.insert')
+                    <button type="button" class="btn btn-purple rounded-pill w-md waves-effect waves-light mb-3" data-bs-toggle="modal" data-bs-target="#insertProduk"><i class="mdi mdi-plus"></i> Tambah Produk</button>
+                </div>
+                <div class="col-sm-8"></div>
                 @foreach ($produk as $item)
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">{{ $item->nama }}</h4>
@@ -69,7 +71,7 @@
     </div> <!-- content -->
 
     <!-- Footer Start -->
-    
+
 
 @include('layout_dashboard.rightbar')
 @include('layout_dashboard.footer')

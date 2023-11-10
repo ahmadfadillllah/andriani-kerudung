@@ -9,6 +9,11 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App css -->
+    <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- icons -->
+    <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/images/favicon.ico">
 
@@ -26,11 +31,7 @@
     <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App css -->
-    <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
-    <!-- icons -->
-    <link href="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.lordicon.com/lordicon-1.1.0.js"></script>

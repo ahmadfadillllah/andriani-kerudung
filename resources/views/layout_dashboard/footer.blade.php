@@ -15,8 +15,6 @@
 <!-- Init js -->
 <script src="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/js/pages/chartjs.init.js"></script>
 
-<!-- App js -->
-<script src="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/js/app.min.js"></script>
 
 <!-- knob plugin -->
 <script src="{{ asset('adminto/coderthemes.com/adminto/layouts') }}/assets/libs/jquery-knob/jquery.knob.min.js"></script>

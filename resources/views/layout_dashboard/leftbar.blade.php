@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="list-inline-item">
-                    <a href="#">
+                    <a href="{{ route('logout') }}">
                         <i class="mdi mdi-power"></i>
                     </a>
                 </li>

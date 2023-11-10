@@ -30,6 +30,8 @@
                 <li><a href="{{ route('home.contact') }}">Kontak</a></li>
                 @if (Auth::user())
                 <li><a href="{{ route('dashboard.index') }}">Masuk ke Dashboard</a></li>
+                @else
+                <li><a href="{{ route('login') }}">Login</a></li>
                 @endif
             </ul>
         </nav>
