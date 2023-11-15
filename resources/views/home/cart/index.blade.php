@@ -54,7 +54,7 @@
                                     <tr>
                                         <!-- img -->
                                         <td class="tp-cart-img"><a href="javascript:void(0);"> <img
-                                                    src="{{ $item->produk->gambar1 }}"
+                                                    src="{{ asset('image/produk/') }}/{{ $item->produk->gambar1 }}"
                                                     alt="" style="border-radius:10px"></a></td>
                                         <!-- title -->
                                         <td class="tp-cart-title"><a
@@ -181,7 +181,7 @@
                                             </div>
                                         </div>
                                         <div class="mt-5">
-                                            <img src="{{ $bu->gambar1 }}" style="width: 100px">
+                                            <img src="{{ asset('image/produk/') }}/{{ $bu->gambar1 }}" style="width: 100px">
                                             <div class="mt-5">
                                                 <div class="mt-3"> <span class="text1"><del>@currency($bu->hargaasli)</del> / @currency($bu->harga)</div>
                                             </div>

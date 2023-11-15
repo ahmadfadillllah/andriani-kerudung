@@ -40,6 +40,7 @@ Route::post('/contact/post', [HomeController::class, 'contactpost'])->name('home
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login/post', [AuthController::class, 'login_post'])->name('login.post');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register/post', [AuthController::class, 'register_post'])->name('register.post');
 Route::get('/login/admin', [AuthController::class, 'loginadmin'])->name('loginadmin');
 Route::post('/login/admin/post', [AuthController::class, 'loginadmin_post'])->name('loginadmin.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -51,7 +52,7 @@ Route::get('cities', [DependantDropdownController::class, 'cities'])->name('citi
 Route::post('/home/cart/add/{id}', [CartController::class, 'add'])->name('home.cart.add');
 Route::post('/home/cart/add_luar/{id}', [CartController::class, 'add_luar'])->name('home.cart.add_luar');
 Route::get('/home/cart/add_bundle/{id}', [CartController::class, 'add_bundle'])->name('home.cart.add_bundle');
-Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
+Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], function(){
 
     //Home Profile
     Route::get('/home/profile', [ProfileHomeController::class, 'index'])->name('home.profile.index');
@@ -101,12 +102,14 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan']], function(){
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
     Route::post('/produk/insert', [ProdukController::class, 'insert'])->name('produk.insert');
     Route::post('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
+    Route::post('/produk/updategambar/{id}', [ProdukController::class, 'updategambar'])->name('produk.updategambar');
     Route::get('/produk/destroy/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 
     //Bundle
     Route::get('/bundle', [BundleController::class, 'index'])->name('bundle.index');
     Route::post('/bundle/insert', [BundleController::class, 'insert'])->name('bundle.insert');
     Route::post('/bundle/update/{id}', [BundleController::class, 'update'])->name('bundle.update');
+    Route::post('/bundle/updatebundle/{id}', [BundleController::class, 'updatebundle'])->name('bundle.updatebundle');
     Route::get('/bundle/destroy/{id}', [BundleController::class, 'destroy'])->name('bundle.destroy');
 
     //Users

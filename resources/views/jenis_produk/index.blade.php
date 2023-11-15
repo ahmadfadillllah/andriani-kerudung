@@ -38,9 +38,11 @@
                                                 <span class="btn-label"><i class="mdi mdi-close-circle-outline"></i></span>Hapus
                                             </button>
 
-                                            <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editJenisProduk{{ $item->id }}">
-                                                <span class="btn-label"><i class="mdi mdi-alert"></i></span>Edit
-                                            </button>
+                                           @if (Auth::user()->role =='karyawan')
+                                           <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editJenisProduk{{ $item->id }}">
+                                            <span class="btn-label"><i class="mdi mdi-alert"></i></span>Edit
+                                        </button>
+                                           @endif
                                         </td>
                                     </tr>
                                     @include('jenis_produk.modal.edit')

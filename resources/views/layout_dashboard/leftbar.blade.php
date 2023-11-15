@@ -82,6 +82,7 @@
                     </a>
                 </li>
                 <li class="menu-title">Extra</li>
+                @if (Auth::user()->role == 'owner')
                 <li>
                     <a href="{{ route('keranjang.index') }}">
                         <i class="mdi mdi-briefcase-variant-outline"></i>
@@ -106,6 +107,8 @@
                         <span> Users </span>
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->role == 'karyawan')
                 <li>
                     <a href="{{ route('validasi.index') }}">
                         <i class="mdi mdi-file-multiple-outline"></i>
@@ -118,6 +121,7 @@
                         <span> Konfirmasi Pesanan </span>
                     </a>
                 </li>
+                @endif
             </ul>
 
         </div>

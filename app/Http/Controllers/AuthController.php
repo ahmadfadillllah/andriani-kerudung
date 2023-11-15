@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -11,6 +13,40 @@ class AuthController extends Controller
     public function login()
     {
         return view('home.login');
+    }
+
+    public function register()
+    {
+        return view('home.register');
+    }
+
+    public function register_post(Request $request)
+    {
+        $request->validate([
+            'name' => ['required'],
+            'username' => ['required', 'unique:users,username'],
+            'email' => ['required', 'unique:users,email'],
+            'no_hp' => ['required'],
+            'password' => ['required', 'confirmed'],
+        ]);
+
+        try {
+            $user = new User;
+            $user->statusenabled = true;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->no_hp = $request->no_hp;
+            $user->role = 'pembeli';
+            $user->avatar = 'user.png';
+            $user->tipe = 'biasa';
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return redirect()->route('login')->with('success', 'User berhasil registrasi');
+        } catch (\Throwable $th) {
+            return redirect()->route('login')->with('info', $th->getMessage());
+        }
     }
 
     public function login_post(Request $request)

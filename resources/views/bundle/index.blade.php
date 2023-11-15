@@ -27,22 +27,22 @@
                                         <div class="carousel-inner">
                                             @if ($item->gambar1 != null)
                                                 <div class="carousel-item active">
-                                                    <img class="d-block img-fluid" src="{{ $item->gambar1 }}">
+                                                    <img class="d-block img-fluid" src="{{ asset('image/produk/') }}/{{ $item->gambar1 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar2 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ $item->gambar2 }}">
+                                                    <img class="d-block img-fluid" src="{{ asset('image/produk/') }}/{{ $item->gambar2 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar3 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ $item->gambar3 }}">
+                                                    <img class="d-block img-fluid" src="{{ asset('image/produk/') }}/{{ $item->gambar3 }}">
                                                 </div>
                                             @endif
                                             @if ($item->gambar4 != null)
                                                 <div class="carousel-item">
-                                                    <img class="d-block img-fluid" src="{{ $item->gambar4 }}">
+                                                    <img class="d-block img-fluid" src="{{ asset('image/produk/') }}/{{ $item->gambar4 }}">
                                                 </div>
                                             @endif
 
@@ -57,10 +57,20 @@
                                         <span class="visually-hidden">Next</span>
                                     </a>
                                 </div>
-
+                                @if (Auth::user()->id == $item->users_id)
+                                <hr>
+                                <div class="button-list">
+                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" data-bs-toggle="modal" data-bs-target="#detailBundle{{$item->id}}">Detail</button>
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light btn-xs" data-bs-toggle="modal" data-bs-target="#editBundle{{$item->id}}">Edit Gambar</button>
+                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-xs" data-bs-toggle="modal" data-bs-target="#hapusBundle{{$item->id}}">Hapus</button>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @include('bundle.modal.edit')
+                    @include('bundle.modal.detail')
+                    @include('bundle.modal.destroy')
                 @endforeach
                 <!-- end col -->
             </div>

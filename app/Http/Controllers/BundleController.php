@@ -54,10 +54,49 @@ class BundleController extends Controller
         try {
             Produk::where('id', $id)->update([
                 'nama' => $request->nama,
+                // 'bundle' => $request->bundle,
                 'stok' => $request->stok,
                 'harga' => $request->harga,
+                'hargaasli' => $request->hargaasli,
             ]);
-            return redirect()->back()->with('success', 'Jenis produk berhasil diupdate');
+            return redirect()->back()->with('success', 'Bundle berhasil diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', $th->getMessage());
+        }
+    }
+
+    public function updatebundle($id,Request $request)
+    {
+        $date = date('YmdHisgis');
+        try {
+
+            $produk = Produk::find($id);
+
+            if($request->hasFile('gambar1')){
+                $request->file('gambar1')->move('image/produk/', $date.$request->file('gambar1')->getClientOriginalName());
+                $produk->gambar1 = $date.$request->file('gambar1')->getClientOriginalName();
+                $produk->save();
+            }
+
+            if($request->hasFile('gambar2')){
+                $request->file('gambar2')->move('image/produk/', $date.$request->file('gambar2')->getClientOriginalName());
+                $produk->gambar2 = $date.$request->file('gambar2')->getClientOriginalName();
+                $produk->save();
+            }
+
+            if($request->hasFile('gambar3')){
+                $request->file('gambar3')->move('image/produk/', $date.$request->file('gambar3')->getClientOriginalName());
+                $produk->gambar3 = $date.$request->file('gambar3')->getClientOriginalName();
+                $produk->save();
+            }
+
+            if($request->hasFile('gambar4')){
+                $request->file('gambar4')->move('image/produk/', $date.$request->file('gambar4')->getClientOriginalName());
+                $produk->gambar4 = $date.$request->file('gambar4')->getClientOriginalName();
+                $produk->save();
+            }
+
+            return redirect()->back()->with('success', 'Gambar bundle berhasil diupdate');
         } catch (\Throwable $th) {
             return redirect()->back()->with('info', $th->getMessage());
         }

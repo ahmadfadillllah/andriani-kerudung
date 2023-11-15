@@ -25,7 +25,7 @@
                 <div class="cartmini__widget-item">
                     <div class="cartmini__thumb">
                         <a href="javascript:void(0);">
-                            <img src="{{ $c->produk->gambar1 }}" alt="">
+                            <img src="{{ asset('image/produk/') }}/{{ $c->produk->gambar1 }}" alt="">
                         </a>
                     </div>
                     <div class="cartmini__content">

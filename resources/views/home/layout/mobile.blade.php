@@ -27,7 +27,7 @@
             </div> --}}
             <div class="col">
                 <div class="tp-mobile-item text-center">
-                    <a href="profile.html" class="tp-mobile-item-btn">
+                    <a href="{{ route('home.profile.index') }}" class="tp-mobile-item-btn">
                         <i class="flaticon-user"></i>
                         <span>Akun</span>
                     </a>
