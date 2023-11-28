@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisProdukController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\KonfirmasiController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileHomeController;
 use App\Http\Controllers\RekapanController;
@@ -65,6 +66,9 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
     Route::get('/home/cart/{id_cart}', [CartController::class, 'delete'])->name('home.cart.delete');
     Route::post('/home/cart', [CartController::class, 'update_cart'])->name('home.cart.update_cart');
     Route::post('/home/cart/checkout', [CartController::class, 'checkout'])->name('home.cart.checkout');
+
+    //Order
+    Route::get('/home/orders/{order_id}', [OrdersController::class, 'index'])->name('home.orders.index');
 
     //Checkout
     Route::get('/home/checkout', [CheckoutController::class, 'index'])->name('home.checkout.index');

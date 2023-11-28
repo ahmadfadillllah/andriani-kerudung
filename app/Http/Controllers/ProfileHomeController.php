@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamat;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,9 @@ class ProfileHomeController extends Controller
         $alamat = Alamat::where('users_id', Auth::user()->id)->where('statusenabled', true)->get();
         $alamat_utama = $alamat->pluck('utama')->toArray();
 
-        return view('home.profile.index', compact('cek_cart', 'cart', 'alamat', 'alamat_utama'));
+        $order = Order::where('users_id', Auth::user()->id)->groupby('order_id')->get();
+
+        return view('home.profile.index', compact('cek_cart', 'cart', 'alamat', 'alamat_utama', 'order'));
 
     }
 

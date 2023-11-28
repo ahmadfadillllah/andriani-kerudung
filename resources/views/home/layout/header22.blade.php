@@ -30,7 +30,7 @@
                 <li><a href="{{ route('home.contact') }}">Kontak</a></li>
                 @if (!Auth::user())
                 <li><a href="{{ route('login') }}">Login</a></li>
-                @elseif (Auth::user()->role == 'karyawan' or Auth::user()->role == 'admin')
+                @elseif (Auth::user()->role == 'karyawan' or Auth::user()->role == 'owner')
                 <li><a href="{{ route('dashboard.index') }}">Masuk ke Dashboard</a></li>
                 @endif
             </ul>
