@@ -9,7 +9,7 @@
 @include('home.layout.header3')
 
 <main>
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key={{ config('clientKey') }}></script>
+    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-YCHtULs46ydSA7tV"></script>
     <!-- breadcrumb area start -->
     <section class="breadcrumb__area include-bg pt-95 pb-50" data-bg-color="#EFF1F5">
        <div class="container">
@@ -169,6 +169,7 @@
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
         var cara_bayar = $("input[name='cara_bayar']:checked").val();
+
         var catatan = $("textarea[name='catatan']").val();
         var sk = document.getElementById("read_all").checked;
         if(cara_bayar == undefined){
@@ -177,13 +178,15 @@
                     'Harap memilih cara bayar terlebih dahulu',
                     'info'
                     )
-        }else if(sk == false){
+        }
+        if(sk == false){
             Swal.fire(
                     'Upps!',
                     'Harap centang S&K terlebih dahulu',
                     'info'
                     )
-        }else if(cara_bayar == "COD" && sk == true){
+        }
+        if(cara_bayar == "COD"){
             let dataId = @json($cart);
                     var status = "checkout";
                     var data = {
@@ -207,16 +210,21 @@
                         headers: headers,
                         success: function(data, status) {
                             console.log(data);
-                            Swal.fire(
-                            'Sukses',
-                            'Proses berhasil,Silahkan Cek status pesanan anda',
-                            'success'
-                            )
+
                         // window.location = "{{ route('home.index') }}";
                         },
                         dataType: dataType
                     });
-        }else{
+                    setInterval(() => {
+                        window.location = "{{ route('home.profile.index') }}";
+                    }, 3000);
+                    Swal.fire(
+                            'Sukses',
+                            'Proses berhasil,Silahkan Cek status pesanan anda',
+                            'success'
+                            )
+
+        }if(cara_bayar == "Bayar Langsung"){
             window.snap.pay('{{ $token }}', {
                 onSuccess: function(result){
                 /* You may add your own implementation here */
