@@ -18,7 +18,7 @@ class HomeController extends Controller
         if(isset($request->produk)){
             $produk = Produk::where('statusenabled', true)->where('bundle', null)
             ->where('stok', '>', 0)->with('jenisproduk')
-            ->orWhere('nama', 'like', '%' . $request->produk . '%')
+            ->Where('nama', 'like', '%' . $request->produk . '%')
             ->get();
         }else{
             $produk = Produk::where('statusenabled', true)->where('bundle', null)->where('stok', '>', 0)->with('jenisproduk')->get();

@@ -147,9 +147,9 @@
                          </div>
                         @endif
                      </div>
+
                      <div class="tp-cart-coupon-input-box">
                         <label for="kurir">Pilih Kurir</label>
-
                         <select name="kurir" id="kurir" onchange="test(this);">
                             <option>Pilih kurir terlebih dahulu</option>
                             @if ($alamat != null)
