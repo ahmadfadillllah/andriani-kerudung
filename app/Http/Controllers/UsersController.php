@@ -78,6 +78,18 @@ class UsersController extends Controller
         }
     }
 
+    public function change_password($id,Request $request)
+    {
+        try {
+            User::where('id', $id)->update([
+                'password' => Hash::make($request->password),
+            ]);
+            return redirect()->back()->with('success', 'Password berhasil diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', $th->getMessage());
+        }
+    }
+
     public function insert(Request $request)
     {
         $request->validate([

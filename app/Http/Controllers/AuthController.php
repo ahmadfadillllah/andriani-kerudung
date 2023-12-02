@@ -58,7 +58,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            if(Auth::user()->statusenabled == true){
+            if(Auth::user()->role == 'owner'){
+                $request->session()->regenerate();
+                return redirect()->route('dashboard.index')->with('success', 'Berhasil login');
+            }else if(Auth::user()->statusenabled == true){
                 $request->session()->regenerate();
                 return redirect()->route('home.index')->with('success', 'Berhasil login');
             }else{

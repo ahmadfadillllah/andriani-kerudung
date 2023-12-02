@@ -252,14 +252,14 @@
                         data: data,
                         headers: headers,
                         success: function(data, status) {
-                            setInterval(() => {
                             Swal.fire(
                             'Sukses',
                             'Proses berhasil,Silahkan Cek status pesanan anda',
                             'success'
                             )
+                            setInterval(() => {
+                            window.location = "{{ route('home.profile.index') }}";
                         }, 3000);
-                        window.location = "{{ route('home.index') }}";
                         },
                         dataType: dataType
                     });

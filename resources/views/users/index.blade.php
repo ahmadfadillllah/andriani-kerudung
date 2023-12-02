@@ -75,6 +75,7 @@
                 </div>
                 @include('users.modal.edit')
                 @include('users.modal.destroy')
+                @include('users.modal.change-password')
                 @endforeach
             </div>
             <!-- end row -->

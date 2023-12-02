@@ -84,9 +84,9 @@
                 <li class="menu-title">Extra</li>
                 @if (Auth::user()->role == 'owner')
                 <li>
-                    <a href="{{ route('keranjang.index') }}">
-                        <i class="mdi mdi-briefcase-variant-outline"></i>
-                        <span> Keranjang </span>
+                    <a href="{{ route('kupon.index') }}">
+                        <i class="mdi mdi-book-open-page-variant-outline"></i>
+                        <span> Coupon Kode </span>
                     </a>
                 </li>
                 <li>
@@ -110,6 +110,12 @@
                 @endif
                 @if (Auth::user()->role == 'karyawan')
                 <li>
+                    <a href="{{ route('keranjang.index') }}">
+                        <i class="mdi mdi-briefcase-variant-outline"></i>
+                        <span> Keranjang </span>
+                    </a>
+                </li>
+                {{-- <li>
                     <a href="{{ route('validasi.index') }}">
                         <i class="mdi mdi-file-multiple-outline"></i>
                         <span> Validasi Pembayaran </span>
@@ -120,7 +126,7 @@
                         <i class="mdi mdi-dock-window"></i>
                         <span> Konfirmasi Pesanan </span>
                     </a>
-                </li>
+                </li> --}}
                 @endif
             </ul>
 

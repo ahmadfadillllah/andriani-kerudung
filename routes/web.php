@@ -74,7 +74,10 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
     Route::get('/home/checkout', [CheckoutController::class, 'index'])->name('home.checkout.index');
     Route::post('/home/checkout/proses', [CheckoutController::class, 'proses'])->name('home.checkout.proses');
 
-    Route::get('/coupon', [DiskonController::class, 'index'])->name('coupon.index');
+    Route::get('/coupon', [DiskonController::class, 'index'])->name('kupon.index');
+    Route::post('/coupon/insert', [DiskonController::class, 'insert'])->name('kupon.insert');
+    Route::post('/coupon/update/{id}', [DiskonController::class, 'update'])->name('kupon.update');
+    Route::get('/coupon/destroy/{id}', [DiskonController::class, 'destroy'])->name('kupon.destroy');
 
     //Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -120,5 +123,6 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::post('/users/insert', [UsersController::class, 'insert'])->name('users.insert');
     Route::post('/users/update/{id}', [UsersController::class, 'update'])->name('users.update');
+    Route::post('/users/change_password/{id}', [UsersController::class, 'change_password'])->name('users.changepassword');
     Route::get('/users/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 });

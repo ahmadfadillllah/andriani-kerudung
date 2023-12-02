@@ -170,7 +170,7 @@
                             <div class="card-group">
                                 @if($bundle != null)
                                 @foreach ($bundle as $bu)
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="card p-3 mb-2">
                                         <div class="d-flex justify-content-between">
                                             <div class="d-flex flex-row align-items-center">
