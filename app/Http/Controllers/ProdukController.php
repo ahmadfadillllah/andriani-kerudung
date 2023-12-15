@@ -14,7 +14,9 @@ class ProdukController extends Controller
     public function index()
     {
         $jenis_produk = JenisProduk::where('statusenabled', true)->get();
+        // dd($jenis_produk);
         $produk = Produk::with('jenisproduk')->where('statusenabled', true)->get();
+        // dd($produk);
         return view('produk.index', compact('jenis_produk','produk'));
     }
 

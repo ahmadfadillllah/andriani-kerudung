@@ -89,6 +89,10 @@ class CartController extends Controller
         if(!Auth::user()){
             return redirect()->back()->with('info', 'Silahkan login terlebih dahulu');
         }
+        $produk = Produk::where('id', $id)->first();
+        if($produk->stok < $request->jumlah){
+            return redirect()->route('home.index')->with('info', 'Maaf, stok tidak mencukupi');
+        }
         $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         if($cek_cart > 0){
             return redirect()->route('home.index')->with('info', 'Mohon periksa keranjang anda, barang sudah ada sebelumnya');
@@ -134,6 +138,10 @@ class CartController extends Controller
     {
         if(!Auth::user()){
             return redirect()->back()->with('info', 'Silahkan login terlebih dahulu');
+        }
+        $produk = Produk::where('id', $id)->first();
+        if($produk->stok < $request->jumlah){
+            return redirect()->route('home.index')->with('info', 'Maaf, stok tidak mencukupi');
         }
         $cek_cart = Cart::where('users_id', Auth::user()->id)->where('produk_id', $id)->where('statusenabled', true)->where('statuscheckout', null)->get()->count();
         if($cek_cart > 0){

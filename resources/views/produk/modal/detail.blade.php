@@ -17,7 +17,7 @@
                             <div class="mb-3">
                                 <label for="example-select" class="form-label">Pilih Jenis</label>
                                 <select class="form-select" id="example-select" name="jenisproduk_id">
-                                    <option value="{{ $item->jenisproduk_id  }}" hidden>{{ $item->jenisproduk->nama  }}</option>
+                                    <option value="{{ $item->jenisproduk->id  }}" hidden>{{ $item->jenisproduk->nama }}</option>
                                     @foreach ($jenis_produk as $jenis)
                                     <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
                                     @endforeach
