@@ -15,8 +15,8 @@ class ProfileHomeController extends Controller
     //
     public function index()
     {
-        $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get()->count();
-        $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->get();
+        $cek_cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statuscheckout', null)->get()->count();
+        $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statuscheckout', null)->get();
 
         $alamat = Alamat::where('users_id', Auth::user()->id)->where('statusenabled', true)->get();
         $alamat_utama = $alamat->pluck('utama')->toArray();

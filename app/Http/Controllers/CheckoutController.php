@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alamat;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -72,6 +73,17 @@ class CheckoutController extends Controller
                 $cart = Cart::find($value['id']);
                 $cart->statuscheckout = $request->status;
                 $cart->save();
+            }
+
+            foreach($request->idcart as $key=>$value){
+                $produk = Produk::find($value['produk']['id']);
+                if($produk['bundle'] != null){
+                    $bundle = Produk::find($produk['bundle']);
+                    $bundle->stok = (int)$bundle['stok'] - (int)$value['jumlah'];
+                    $bundle->save();
+                }
+                $produk->stok = (int)$produk['stok'] - (int)$value['jumlah'];
+                $produk->save();
             }
 
             return redirect()->back()->with('success', 'Order berhasil');
