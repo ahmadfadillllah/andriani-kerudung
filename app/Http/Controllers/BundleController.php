@@ -24,8 +24,10 @@ class BundleController extends Controller
         $date = date('YmdHisgis');
         $harga = Str::replace('Rp', '', $request->harga);
         $harga = Str::replace('.', '', $harga);
+        $harga = Str::replace(',', '', $harga);
         $hargaasli = Str::replace('Rp', '', $request->hargaasli);
         $hargaasli = Str::replace('.', '', $hargaasli);
+        $hargaasli = Str::replace(',', '', $hargaasli);
         try {
             $bundle = new Produk;
             $bundle->users_id = Auth::user()->id;
@@ -51,13 +53,19 @@ class BundleController extends Controller
 
     public function update($id,Request $request)
     {
+        $harga = Str::replace('Rp', '', $request->harga);
+        $harga = Str::replace('.', '', $harga);
+        $harga = Str::replace(',', '', $harga);
+        $hargaasli = Str::replace('Rp', '', $request->hargaasli);
+        $hargaasli = Str::replace('.', '', $hargaasli);
+        $hargaasli = Str::replace(',', '', $hargaasli);
         try {
             Produk::where('id', $id)->update([
                 'nama' => $request->nama,
                 // 'bundle' => $request->bundle,
                 'stok' => $request->stok,
-                'harga' => $request->harga,
-                'hargaasli' => $request->hargaasli,
+                'harga' => $harga,
+                'hargaasli' => $hargaasli,
             ]);
             return redirect()->back()->with('success', 'Bundle berhasil diupdate');
         } catch (\Throwable $th) {
