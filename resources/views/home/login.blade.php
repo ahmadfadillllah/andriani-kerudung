@@ -7,8 +7,8 @@
 @if (Auth::user())
 @include('home.layout.cart')
 @endif
-@include('home.layout.header2')
 @include('home.layout.header3')
+@include('home.layout.header2')
 
 <main>
 

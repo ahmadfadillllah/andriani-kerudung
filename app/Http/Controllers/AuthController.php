@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisProduk;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +13,14 @@ class AuthController extends Controller
     //
     public function login()
     {
-        return view('home.login');
+        $jenis_produk = JenisProduk::where('statusenabled', true)->get();
+        return view('home.login', compact('jenis_produk'));
     }
 
     public function register()
     {
-        return view('home.register');
+        $jenis_produk = JenisProduk::where('statusenabled', true)->get();
+        return view('home.register', compact('jenis_produk'));
     }
 
     public function register_post(Request $request)

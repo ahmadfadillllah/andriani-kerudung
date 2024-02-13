@@ -153,6 +153,11 @@
                         <select name="kurir" id="kurir" onchange="test(this);">
                             <option>Pilih kurir terlebih dahulu</option>
                             @if ($alamat != null)
+                            @if ($alamat->kota == 254)
+                                <optgroup label="Kurir Toko">
+                                    <option value="0">Gratis, Estimasi 1-2 hari</option>
+                                </optgroup>
+                            @else
                                 @foreach ($kurir as $kr)
                                     <optgroup label="{{ $kr->description }}">
                                         @foreach ($kr->cost as $cost)
@@ -161,10 +166,13 @@
                                     </optgroup>
                                 @endforeach
                             @endif
+
+                            @endif
                         </select>
                      </div>
 
 
+                    @if (Auth::user()->tipe == "vip")
                     <div class="container-fluid">
                         <div class="row">
                             <div class="card-group">
@@ -195,6 +203,8 @@
                             </div>
                         </div>
                     </div>
+
+                    @endif
                 </div>
                 @if ($coupon != null)
                     @php

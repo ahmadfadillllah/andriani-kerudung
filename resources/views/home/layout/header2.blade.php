@@ -146,7 +146,7 @@
             <div class="container">
                 <div class="tp-mega-menu-wrapper p-relative">
                     <div class="row align-items-center">
-                        @if (request()->routeIs('home.index'))
+                        @if (request()->routeIs('home.index') or request()->routeIs('login') or request()->routeIs('register'))
                             @include('home.layout.header22')
                         @endif
 
