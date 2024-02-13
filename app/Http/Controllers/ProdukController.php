@@ -6,7 +6,6 @@ use App\Models\JenisProduk;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProdukController extends Controller
@@ -16,11 +15,7 @@ class ProdukController extends Controller
     {
         $jenis_produk = JenisProduk::where('statusenabled', true)->get();
         // dd($jenis_produk);
-        $produk = DB::table('produk')
-        ->join('jenisproduk', 'produk.jenisproduk_id', '=', 'jenisproduk.id')
-        ->select('produk.*', 'jenisproduk.*')
-        ->where('produk.statusenabled', true)
-        ->get();
+        $produk = Produk::with('jenisproduk')->where('statusenabled', true)->get();
         // dd($produk);
         return view('produk.index', compact('jenis_produk','produk'));
     }
