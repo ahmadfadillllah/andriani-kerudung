@@ -98,7 +98,7 @@ class UsersController extends Controller
             'username' => 'required|unique:users|max:255',
             'no_hp' => 'required',
             'password' => 'required|confirmed|min:6',
-            'role' => 'required',
+            // 'role' => 'required',
         ]);
 
         if($request->tipe == "null"){
@@ -124,8 +124,10 @@ class UsersController extends Controller
             $barang->username = $request->username;
             $barang->password = Hash::make($request->password);
             $barang->no_hp = $request->no_hp;
-            $barang->role = $request->role;
-            $barang->tipe = $tipeakun;
+            // $barang->role = $request->role;
+            $barang->role = 'karyawan';
+            // $barang->tipe = $tipeakun;
+            $barang->tipe = 'biasa';
             $barang->avatar = 'user.png';
             $barang->save();
 

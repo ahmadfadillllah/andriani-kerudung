@@ -253,55 +253,80 @@
         var op = selectBox.options[selectBox.selectedIndex];
         var optgroup = op.parentNode;
         namakurir = optgroup.label;
-        }
+    }
+
     var checkoutButton = document.getElementById('checkout-button');
     checkoutButton.addEventListener('click', function () {
         var x = document.getElementById("button-checkout");
         var kurir = $('#kurir').val();
 
         var subtotal = document.getElementById("subtotal").innerHTML;
-        subtotal = parseFloat(subtotal.replace(",",""));
+        subtotal = parseFloat(subtotal.replace(",", ""));
 
         var diskon = document.getElementById("diskonn").innerHTML;
-        diskon = parseFloat(diskon.replace(",",""));
+        diskon = parseFloat(diskon.replace(",", ""));
 
-        var ongkoskirim = document.getElementById("ongkoskirim").innerHTML;
-        ongkoskirim = parseFloat(ongkoskirim.replace(",",""));
+        var ongkoskirim = parseFloat($('#kurir').val()); // Mengambil nilai ongkos kirim langsung dari opsi yang dipilih
 
         var total = document.getElementById("totalseluruh").innerHTML;
-        total = parseFloat(total.replace(",",""));
+        total = parseFloat(total.replace(",", ""));
 
-        if(kurir == "Pilih kurir terlebih dahulu"){
+        if (kurir == "Pilih kurir terlebih dahulu") {
             Swal.fire(
-                    'Upps!',
-                    'Harap memilih kurir terlebih dahulu',
-                    'info'
-                    )
-        }else{
-            location.replace("{{ route('home.checkout.index') }}?diskon="+diskon
-            +"&kurir=" + kurir
-            +"&ongkoskirim=" + ongkoskirim
-            +"&total=" + total
-            +"&subtotal=" + subtotal
-            +"&namakurir=" + namakurir
+                'Upps!',
+                'Harap memilih kurir terlebih dahulu',
+                'info'
+            )
+        } else {
+            // Menghitung total dengan menambahkan ongkos kirim ke subtotal
+            var totalseluruh = subtotal + ongkoskirim;
+
+            // Memperbarui tampilan total secara langsung tanpa perlu memuat ulang halaman
+            var tkeseluruhan = document.getElementById("totalseluruh");
+            tkeseluruhan.innerHTML = new Intl.NumberFormat().format(totalseluruh);
+
+            // Navigasi ke halaman checkout dengan parameter yang diperlukan
+            location.replace("{{ route('home.checkout.index') }}?diskon=" + diskon
+                + "&kurir=" + kurir
+                + "&ongkoskirim=" + ongkoskirim
+                + "&total=" + totalseluruh // Mengirim nilai total yang sudah diperbarui
+                + "&subtotal=" + subtotal
+                + "&namakurir=" + namakurir
             );
         }
     });
-</script>
 
-<script>
-    $('#kurir').on('change', function(){
-    const selectedPackage = $('#kurir').val();
-    $('#selected').text(selectedPackage);
-    var ongkoskirim = document.getElementById("ongkoskirim");
-    var tkeseluruhan = document.getElementById("totalseluruh");
+    $('#kurir').on('change', function () {
+        const selectedPackage = $('#kurir').val();
+        $('#selected').text(selectedPackage);
 
-    var total = document.getElementById("totalseluruh").innerHTML;
-    var total = parseFloat(total.replace(",",""));
-    var totalseluruh = parseFloat(total) + parseFloat(selectedPackage);
+        var subtotal = parseFloat(document.getElementById("subtotal").innerHTML.replace(",", ""));
+        var diskon = parseFloat(document.getElementById("diskonn").innerHTML.replace(",", ""));
+        var ongkoskirim = parseFloat(selectedPackage);
+        var totalseluruh = subtotal + ongkoskirim;
 
-    ongkoskirim.innerHTML = new Intl.NumberFormat().format(selectedPackage);
-    tkeseluruhan.innerHTML = new Intl.NumberFormat().format(totalseluruh);
-});
+        // Menghitung total dengan menambahkan ongkos kirim ke subtotal
+        if(isNaN(ongkoskirim)){
+            ongkoskirim = 0;
+        }else{
+            ongkoskirim = parseFloat(selectedPackage);
+        }
+
+        if(isNaN(totalseluruh)){
+            totalseluruh = subtotal;
+        }else{
+            totalseluruh = subtotal + ongkoskirim;
+        }
+        console.log(ongkoskirim);
+        console.log(totalseluruh);
+
+        // Memperbarui tampilan ongkos kirim secara langsung tanpa perlu memuat ulang halaman
+        var ongkoskirimElement = document.getElementById("ongkoskirim");
+        ongkoskirimElement.innerHTML = new Intl.NumberFormat().format(ongkoskirim);
+
+        // Memperbarui tampilan total secara langsung tanpa perlu memuat ulang halaman
+        var tkeseluruhan = document.getElementById("totalseluruh");
+        tkeseluruhan.innerHTML = new Intl.NumberFormat().format(totalseluruh);
+    });
 </script>
 @include('home.layout.footer')

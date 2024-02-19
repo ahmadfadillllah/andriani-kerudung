@@ -115,13 +115,13 @@
                         <span> Keranjang </span>
                     </a>
                 </li>
-                {{-- <li>
+               <li>
                     <a href="{{ route('validasi.index') }}">
                         <i class="mdi mdi-file-multiple-outline"></i>
                         <span> Validasi Pembayaran </span>
                     </a>
                 </li>
-                <li>
+                 {{-- <li>
                     <a href="{{ route('konfirmasi.index') }}">
                         <i class="mdi mdi-dock-window"></i>
                         <span> Konfirmasi Pesanan </span>
