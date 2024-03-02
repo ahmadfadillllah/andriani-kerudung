@@ -57,7 +57,7 @@
                                         <span class="visually-hidden">Next</span>
                                     </a>
                                 </div>
-                                @if (Auth::user()->id == $item->users_id)
+                                @if (Auth::user()->id == $item->users_id or Auth::user()->role == 'owner')
                                 <hr>
                                 <div class="button-list">
                                     <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" data-bs-toggle="modal" data-bs-target="#detailProduk{{$item->id}}">Detail</button>
