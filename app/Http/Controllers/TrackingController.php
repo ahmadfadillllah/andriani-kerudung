@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Produk;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +62,38 @@ class TrackingController extends Controller
             $jan, $feb, $mar, $apr, $mei, $jun, $jul, $agu, $sep, $okt, $nov, $des
         ];
 
-        return view('tracking.index', compact('sudahcheckout', 'belumcheckout', 'sudahco', 'belumco'));
+        $tracking = DB::table('produk as pr')
+        ->join('order as or', 'or.produk_id', '=', 'pr.id')
+        ->select('pr.nama', 'pr.stok', DB::raw('SUM(or.jumlah) as total_terjual', 'sisa'))
+        ->groupBy('pr.nama')
+        ->get();
+        foreach ($tracking as $produk) {
+            $produk->sisa = $produk->stok - $produk->total_terjual;
+        }
+
+        return view('tracking.index', compact('sudahcheckout', 'belumcheckout', 'sudahco', 'belumco', 'tracking'));
+    }
+
+    public function download(Request $request)
+    {
+        $tracking = DB::table('produk as pr')
+        ->join('order as or', 'or.produk_id', '=', 'pr.id')
+        ->select('pr.nama', 'pr.stok', DB::raw('SUM(or.jumlah) as total_terjual', 'sisa'))
+        ->groupBy('pr.nama')
+        ->whereBetween('or.created_at', [$request->start_date, $request->end_date])
+        ->get();
+        foreach ($tracking as $produk) {
+            $produk->sisa = $produk->stok - $produk->total_terjual;
+        }
+
+        if($tracking->isEmpty()){
+            return redirect()->back()->with('info', 'Data tidak ada');
+        }
+
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $pdf = \PDF::loadView('tracking.file', compact('tracking', 'start_date', 'end_date'));
+	    return $pdf->stream();
     }
 }

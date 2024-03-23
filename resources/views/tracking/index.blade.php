@@ -72,6 +72,45 @@
         </div>
         <!-- end row -->
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        @include('tracking.modal.download')
+                        <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#bs-example-modal-lg" style="float: right">
+                            <span class="btn-label"><i class="mdi mdi-alert-circle-outline" ></i></span>Download
+                        </button>
+                        <h4 class="mt-0 header-title">Tracking Hasil Penjualan</h4>
+                        <hr>
+                        <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Stok</th>
+                                    <th>Jumlah Terjual</th>
+                                    <th>Stok Sisa</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($tracking as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->stok }}</td>
+                                    <td>{{ $item->total_terjual }}</td>
+                                    <td>{{ $item->sisa }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div> <!-- container-fluid -->
 
     </div> <!-- content -->

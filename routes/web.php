@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
 
     //Tracking Penjualan
     Route::get('/tracking-penjualan', [TrackingController::class, 'index'])->name('tracking.index');
+    Route::post('/tracking-penjualan/download', [TrackingController::class, 'download'])->name('tracking.download');
 
     //Validasi Pembayaran
     Route::get('/validasi-pembayaran', [ValidasiController::class, 'index'])->name('validasi.index');
