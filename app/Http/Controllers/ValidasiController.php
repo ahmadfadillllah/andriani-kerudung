@@ -6,6 +6,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ValidasiController extends Controller
 {
     //
@@ -40,6 +42,9 @@ class ValidasiController extends Controller
         ->select('order.order_id', 'alamat.namaprovinsi', 'alamat.namakota', 'alamat.alamat',
         'order.namakurir', 'order.statuspengiriman', 'order.created_at', 'produk.nama', 'produk.warna', 'produk.berat', 'order.jumlah', 'produk.harga', 'order.subtotal', 'order.diskon', 'order.ongkoskirim', 'order.total as totalkeseluruhan')
         ->get();
+        if($detail->isEmpty()){
+            return redirect()->back()->with('info', 'Maaf, anda tidak mempunyai hak akses');
+        }
         return view('validasi.detail', compact('detail'));
     }
 }
