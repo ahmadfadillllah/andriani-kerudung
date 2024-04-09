@@ -33,6 +33,8 @@ class ProdukController extends Controller
             $produk->statusenabled = true;
             $produk->nama = $request->nama;
             $produk->stok = $request->stok;
+            $produk->warna = $request->warna;
+            $produk->berat = $request->berat;
             // $produk->gambar1 = $request->gambar1;
             // $produk->gambar2 = $request->gambar2;
             // $produk->gambar3 = $request->gambar3;
@@ -72,8 +74,10 @@ class ProdukController extends Controller
                 'stok' => $request->stok,
                 'jenisproduk_id' => $request->jenisproduk_id,
                 'harga' => $request->harga,
+                'warna' => $request->warna,
+                'berat' => $request->berat,
             ]);
-            return redirect()->back()->with('success', 'Jenis produk berhasil diupdate');
+            return redirect()->back()->with('success', 'Produk berhasil diupdate');
         } catch (\Throwable $th) {
             return redirect()->back()->with('info', $th->getMessage());
         }

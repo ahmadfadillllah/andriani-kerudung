@@ -23,6 +23,16 @@ class ProfileHomeController extends Controller
 
         $order = Order::where('users_id', Auth::user()->id)->groupby('order_id')->get();
 
+        if(Auth::user()->nama_toko == null and Auth::user()->alamat_toko == null){
+            User::where('id', Auth::user()->id)->update([
+                'tipe' => 'biasa',
+            ]);
+        }else{
+            User::where('id', Auth::user()->id)->update([
+                'tipe' => 'vip',
+            ]);
+        }
+
         return view('home.profile.index', compact('cek_cart', 'cart', 'alamat', 'alamat_utama', 'order'));
 
     }
@@ -44,6 +54,20 @@ class ProfileHomeController extends Controller
                 'name' => $request->name,
             ]);
             return redirect()->back()->with('success', 'Personal berhasil diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', $th->getMessage());
+        }
+    }
+
+    public function toko(Request $request)
+    {
+        // dd($request->all());
+        try {
+            User::where('id', Auth::user()->id)->update([
+                'nama_toko' => $request->nama_toko,
+                'alamat_toko' => $request->alamat_toko,
+            ]);
+            return redirect()->back()->with('success', 'Detail Toko berhasil diupdate');
         } catch (\Throwable $th) {
             return redirect()->back()->with('info', $th->getMessage());
         }

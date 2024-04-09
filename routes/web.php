@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
     //Home Profile
     Route::get('/home/profile', [ProfileHomeController::class, 'index'])->name('home.profile.index');
     Route::post('/home/profile/personal', [ProfileHomeController::class, 'personal'])->name('home.profile.personal');
+    Route::post('/home/profile/toko', [ProfileHomeController::class, 'toko'])->name('home.profile.toko');
     Route::post('/home/profile/alamat', [ProfileHomeController::class, 'alamat'])->name('home.profile.alamat');
     Route::get('/home/profile/alamat/hapus/{id}', [ProfileHomeController::class, 'hapus_alamat'])->name('home.profile.alamat.hapus');
     Route::post('/home/profile/change_password', [ProfileHomeController::class, 'change_password'])->name('home.profile.change_password');
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,karyawan,pembeli']], fun
 
     //Validasi Pembayaran
     Route::get('/validasi-pembayaran', [ValidasiController::class, 'index'])->name('validasi.index');
+    Route::post('/validasi-pembayaran/update/{id}', [ValidasiController::class, 'update'])->name('validasi.update');
     Route::get('/validasi-pembayaran/detail/{order_id}', [ValidasiController::class, 'detail'])->name('validasi.detail');
 
     //Konfirmasi Pesanan

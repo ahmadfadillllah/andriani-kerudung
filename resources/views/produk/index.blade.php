@@ -19,8 +19,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">{{ $item->nama }}</h4>
-                                <p class="sub-header">Stok: {{ $item->stok }}</p>
-                                <p class="sub-header">Harga: @currency($item->harga)</p>
+                                <p>Stok: {{ $item->stok }}</p>
+                                <p>Warna: {{ $item->warna }}</p>
+                                <p>Berat: {{ $item->berat }}</p>
+                                <p>Harga: @currency($item->harga)</p>
 
                                 <div id="carouselExampleFade{{$item->id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
                                     @if ($item->gambar1 != null or $item->gambar2 != null or $item->gambar3 != null or $item->gambar4 != null)

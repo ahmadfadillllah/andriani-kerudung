@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('role');
             $table->string('avatar');
             $table->string('tipe');
+            $table->string('nama_toko')->nullable();
+            $table->string('alamat_toko')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

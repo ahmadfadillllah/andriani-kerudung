@@ -19,6 +19,16 @@ class ValidasiController extends Controller
         return view('validasi.index', compact('rekapan'));
     }
 
+    public function update($order_id,Request $request)
+    {
+        try {
+            Order::where('order_id', $order_id)->update(['statuspengiriman' => $request->statuspengiriman]);
+            return redirect()->back()->with('success', 'Status Pengiriman berhasil diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('info', $th->getMessage());
+        }
+    }
+
     public function detail($order_id)
     {
         $detail = Order::join('users', 'users.id', 'order.users_id')
@@ -28,7 +38,7 @@ class ValidasiController extends Controller
         ->where('alamat.statusenabled', true)
         ->where('alamat.utama', true)
         ->select('order.order_id', 'alamat.namaprovinsi', 'alamat.namakota', 'alamat.alamat',
-        'order.namakurir', 'order.statuspengiriman', 'order.created_at', 'produk.nama', 'order.jumlah', 'produk.harga', 'order.subtotal', 'order.diskon', 'order.ongkoskirim', 'order.total as totalkeseluruhan')
+        'order.namakurir', 'order.statuspengiriman', 'order.created_at', 'produk.nama', 'produk.warna', 'produk.berat', 'order.jumlah', 'produk.harga', 'order.subtotal', 'order.diskon', 'order.ongkoskirim', 'order.total as totalkeseluruhan')
         ->get();
         return view('validasi.detail', compact('detail'));
     }

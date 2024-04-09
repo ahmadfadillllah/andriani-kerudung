@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\JenisProduk;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,8 +14,14 @@ class AuthController extends Controller
     //
     public function login()
     {
-        $jenis_produk = JenisProduk::where('statusenabled', true)->get();
-        return view('home.login', compact('jenis_produk'));
+        if(Auth::user()){
+            $cart = Cart::with('produk')->where('users_id', Auth::user()->id)->where('statusenabled', true)->where('statuscheckout', null)->get();
+            $jenis_produk = JenisProduk::where('statusenabled', true)->get();
+            return view('home.login', compact('jenis_produk', 'cart'));
+        }else{
+            $jenis_produk = JenisProduk::where('statusenabled', true)->get();
+            return view('home.login', compact('jenis_produk'));
+        }
     }
 
     public function register()

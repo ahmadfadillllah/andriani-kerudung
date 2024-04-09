@@ -26,16 +26,28 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Stok</label>
                                 <input type="number" id="simpleinput" name="stok" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Harga</label>
                                 <input type="text" id="rupiah" name="harga" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Warna</label>
+                                <input type="text" id="simpleinput" name="warna" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Berat</label>
+                                <input type="text" name="berat" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6">

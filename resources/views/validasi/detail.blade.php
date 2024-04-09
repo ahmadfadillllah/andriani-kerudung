@@ -50,6 +50,8 @@
                                             <thead>
                                             <tr><th>#</th>
                                                 <th>Item</th>
+                                                <th>Warna</th>
+                                                <th>Berat</th>
                                                 <th>Jumlah</th>
                                                 <th>Harga</th>
                                             </tr></thead>
@@ -58,6 +60,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->nama }}</td>
+                                                <td>{{ $item->warna }}</td>
+                                                <td>{{ $item->berat }}</td>
                                                 <td>{{ $item->jumlah }}</td>
                                                 <td>@currency($item->harga)</td>
                                             </tr>

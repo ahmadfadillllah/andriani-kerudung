@@ -31,6 +31,9 @@
                        <div class="nav nav-tabs tp-tab-menu flex-column" id="profile-tab" role="tablist">
                           <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fa-regular fa-user-pen"></i></span>Profile</button>
                           <button class="nav-link" id="nav-information-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false"><span><i class="fa-regular fa-circle-info"></i></span> Informasi</button>
+                          @if (Auth::user()->role == 'pembeli')
+                          <button class="nav-link" id="nav-toko-tab" data-bs-toggle="tab" data-bs-target="#nav-toko" type="button" role="tab" aria-controls="nav-toko" aria-selected="false"><span><i class="fa-regular fa-circle-info"></i></span> Toko</button>
+                          @endif
                           <button class="nav-link" id="nav-address-tab" data-bs-toggle="tab" data-bs-target="#nav-address" type="button" role="tab" aria-controls="nav-address" aria-selected="false"><span><i class="fa-light fa-location-dot"></i></span> Alamat </button>
                           @if (Auth::user()->role == 'pembeli')
                           <button class="nav-link" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="false"><span><i class="fa-light fa-clipboard-list-check"></i></span> My Orders </button>
@@ -156,6 +159,45 @@
                              </div>
                           </div>
                        </div>
+                       <div class="tab-pane fade" id="nav-toko" role="tabpanel" aria-labelledby="nav-toko-tab">
+                        <div class="profile__info">
+                           <h3 class="profile__info-title">Toko</h3>
+                           <div class="profile__info-content">
+
+                              <form action="{{ route('home.profile.toko') }}" method="POST">
+                                  @csrf
+                                 <div class="row">
+                                    <div class="col-xxl-6 col-md-6">
+                                       <div class="profile__input-box">
+                                          <div class="profile__input">
+                                             <input type="text" placeholder="Masukkan nama tokomu!" name="nama_toko" value="{{ Auth::user()->nama_toko }}" required>
+                                             <span>
+                                                <i class="fa-regular fa-circle-info"></i>
+                                             </span>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-md-6">
+                                       <div class="profile__input-box">
+                                          <div class="profile__input">
+                                             <input type="text" placeholder="Masukkan alamat tokomu!" name="alamat_toko" value="{{ Auth::user()->alamat_toko }}" required>
+                                             <span>
+                                                <i class="fa-light fa-location-dot"></i>
+                                             </span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-md-6">
+                                       <div class="profile__btn">
+                                          <button type="submit" class="tp-btn">Update</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
                        <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
                           <div class="profile__password">
 

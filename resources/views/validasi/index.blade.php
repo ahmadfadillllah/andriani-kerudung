@@ -23,6 +23,8 @@
                                         <th>Cara Bayar</th>
                                         <th>Total</th>
                                         <th>Kurir</th>
+                                        <th>Status Pengiriman</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -36,17 +38,18 @@
                                         <td>{{ $item->cara_bayar }}</td>
                                         <td>@currency($item->total)</td>
                                         <td>{{ $item->namakurir }}</td>
-
-                                        {{-- <td>
-                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#destroyJenisProduk{{ $item->id }}">
+                                        <td>{{ $item->statuspengiriman }}</td>
+                                        <td>
+                                            {{-- <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#destroyJenisProduk{{ $item->id }}">
                                                 <span class="btn-label"><i class="mdi mdi-close-circle-outline"></i></span>Hapus
-                                            </button>
+                                            </button> --}}
 
-                                            <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editJenisProduk{{ $item->id }}">
-                                                <span class="btn-label"><i class="mdi mdi-alert"></i></span>Edit
+                                            <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#editPengiriman{{ $item->id }}">
+                                                <span class="btn-label"><i class="mdi mdi-alert"></i></span>Update Pengiriman
                                             </button>
-                                        </td> --}}
+                                        </td>
                                     </tr>
+                                    @include('validasi.modal.edit')
                                     @endforeach
                                 </tbody>
                             </table>

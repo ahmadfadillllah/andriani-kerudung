@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('stok')->nullable();
             $table->bigInteger('harga')->nullable();
             $table->bigInteger('hargaasli')->nullable();
+            $table->string('warna')->nullable();
+            $table->string('berat')->nullable();
             $table->string('gambar1')->nullable();
             $table->string('gambar2')->nullable();
             $table->string('gambar3')->nullable();

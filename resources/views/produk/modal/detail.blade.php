@@ -34,6 +34,16 @@
                                 <input type="text" id="rupiahedit" name="harga" value="@currency($item->harga)" class="form-control" required>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Warna</label>
+                                <input type="text" id="simpleinput" name="warna" value="{{ $item->warna }}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Berat</label>
+                                <input type="text" name="berat" value="{{ $item->berat }}" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Update</button>
                 </form>
